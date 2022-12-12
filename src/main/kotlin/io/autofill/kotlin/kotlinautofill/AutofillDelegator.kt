@@ -113,7 +113,6 @@ object AutofillDelegator {
             KotlinBuiltIns.isListOrNullableList(type) -> "listOf()"
             KotlinBuiltIns.isSetOrNullableSet(type) -> "setOf()"
             KotlinBuiltIns.isMapOrNullableMap(type) -> "mapOf()"
-            clazz.jvmName == "UUID" -> "UUID.fromString($ZERO_UUID_STRING)"
             type.isFunctionType -> generateLambdaDefault(type)
             type.isMarkedNullable -> "null"
             else -> null
