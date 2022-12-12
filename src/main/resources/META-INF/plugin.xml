@@ -29,7 +29,7 @@
              groupName="Arguments"
              groupPath="Kotlin"
              enabledByDefault="true"
-             level="INFO"
+             level="INFORMATION"
              implementationClass="io.autofill.kotlin.kotlinautofill.AutofillInspection"/>
     </extensions>
 </idea-plugin>
