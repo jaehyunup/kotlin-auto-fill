@@ -35,7 +35,7 @@ tasks {
 
     patchPluginXml {
         sinceBuild.set("223")
-
+//        pluginDescription.set(file("src/main/resources/META-INF/description.html").readText())
         pluginDescription.set(
             projectDir.resolve("README.md").readText().lines().run {
                 val start = "<!-- Plugin description start -->"
