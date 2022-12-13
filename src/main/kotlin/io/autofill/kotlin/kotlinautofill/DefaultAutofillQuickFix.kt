@@ -5,12 +5,11 @@ import com.intellij.codeInspection.ProblemDescriptor
 import com.intellij.openapi.project.Project
 import org.jetbrains.kotlin.psi.KtValueArgumentList
 
-class DefaultAutofillQuickFix(
-    private val injectConstructorOrFunctionDefaultValue: Boolean
-) : LocalQuickFix {
+class DefaultAutofillQuickFix : LocalQuickFix {
     companion object {
-        const val NAME = "Add arguments with Auto-fill (Default)"
+        const val NAME = "Add parameters with Auto-Fill (Default)"
     }
+
     override fun getName() = NAME
 
     override fun getFamilyName() = name
@@ -18,6 +17,11 @@ class DefaultAutofillQuickFix(
     override fun applyFix(project: Project, descriptor: ProblemDescriptor) {
         val element = descriptor.psiElement as? KtValueArgumentList ?: return
         val parameters = element.getKtDescriptor()?.valueParameters ?: return
-        AutofillDelegator.fillArguments(element, parameters, injectConstructorOrFunctionDefaultValue)
+        AutofillDelegator.fillArguments(
+            ktValueArgumentList = element,
+            parameters = parameters,
+            enableDefaultArgument = true,
+            randomness = false
+        )
     }
 }

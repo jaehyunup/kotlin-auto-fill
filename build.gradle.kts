@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "io.autofill.kotlin"
-version = "0.0.1-M1"
+version = "1.0.0"
 
 repositories {
     mavenCentral()
@@ -56,6 +56,10 @@ tasks {
                 }
             }
         )
+    }
+
+    buildSearchableOptions {
+        enabled = false
     }
 
     signPlugin {

@@ -20,14 +20,13 @@
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.lang</depends>
     <depends>org.jetbrains.kotlin</depends>
-
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
         <localInspection language="kotlin"
              displayName="Auto-fill inspection"
-             groupName="Arguments"
              groupPath="Kotlin"
+             groupName="Auto-Fill"
              enabledByDefault="true"
              level="INFORMATION"
              implementationClass="io.autofill.kotlin.kotlinautofill.AutofillInspection"/>

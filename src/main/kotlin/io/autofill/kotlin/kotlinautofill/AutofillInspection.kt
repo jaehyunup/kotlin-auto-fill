@@ -1,50 +1,46 @@
 package io.autofill.kotlin.kotlinautofill;
 
-import com.intellij.codeInspection.InspectionProfileEntry
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.codeInspection.ui.MultipleCheckboxOptionsPanel
 import org.jetbrains.kotlin.idea.codeinsight.api.classic.inspections.AbstractKotlinInspection
 import org.jetbrains.kotlin.psi.valueArgumentListVisitor
+import javax.swing.JComponent
 
 class AutofillInspection(
-    @JvmField var injectConstructorOrFunctionDefaultValue: Boolean = true,
-    @JvmField var enableRandomValue: Boolean = false
+    @JvmField var visibleMissingArgumentsQuickFix: Boolean = true,
+    @JvmField var visibleRandomModeInspectionQuickFix: Boolean = true
 ) : AbstractKotlinInspection() {
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean) =
         valueArgumentListVisitor { valueArgumentList ->
             val descriptor = valueArgumentList.getKtDescriptor() ?: return@valueArgumentListVisitor
             if (descriptor.valueParameters.size == valueArgumentList.arguments.size) return@valueArgumentListVisitor
+            if (visibleMissingArgumentsQuickFix) {
+                holder.registerProblem(
+                    valueArgumentList,
+                    "Add all missing argument names",
+                    AddAllArgumentsNameQuickFix()
 
-            addDefaultCheckBox(
-                this,
-                listOf(
-                    CheckBoxProperty("Use declared default arguments", "injectConstructorOrFunctionDefaultValue"),
-                    CheckBoxProperty("Use random values to fill arguments", "enableRandomValue")
                 )
-            )
+            }
 
             holder.registerProblem(
                 valueArgumentList,
-                "Add arguments auto-fill",
-                DefaultAutofillQuickFix(injectConstructorOrFunctionDefaultValue)
+                "Auto-fill <Default>",
+                DefaultAutofillQuickFix()
             )
 
-            if(enableRandomValue){
+            if (visibleRandomModeInspectionQuickFix) {
                 holder.registerProblem(
                     valueArgumentList,
-                    "Add arguments auto-fill",
-                    RandomAutofillQuickFix(injectConstructorOrFunctionDefaultValue)
+                    "Auto-Fill <Random>",
+                    RandomAutofillQuickFix()
                 )
-
-            }
-
-        }
-
-    private fun addDefaultCheckBox(owner: InspectionProfileEntry, properties: List<CheckBoxProperty>) {
-        MultipleCheckboxOptionsPanel(owner).apply {
-            properties.forEach {
-                this.addCheckbox(it.label, it.property)
             }
         }
-    }
+
+    override fun createOptionsPanel(): JComponent =
+        MultipleCheckboxOptionsPanel(this).apply {
+            addCheckbox("Visible Random mode Auto-Fill QuickFix", "visibleRandomModeInspectionQuickFix")
+            addCheckbox("Visible '${AddAllArgumentsNameQuickFix.NAME}' Auto-Fill QuickFix", "visibleMissingArgumentsQuickFix")
+        }
 }
