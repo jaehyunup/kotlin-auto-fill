@@ -11,13 +11,11 @@ Installing right now if you kotlin users. ( maybe you will be enchanted 🧙🏽
 - Autofill your all parameters with **random values** automatically
 - Add all you class constructor  & functions arguments only named  
 
-
 <a target="_blank" href=https://user-images.githubusercontent.com/38849685/207317959-eb2f5d4d-7bdc-4560-bfdb-5763236d9b9c.gif>
-<img style="margin-bottom:20px;" width="700" src="https://user-images.githubusercontent.com/38849685/207317959-eb2f5d4d-7bdc-4560-bfdb-5763236d9b9c.gif" alt="auto-fill-kotlin tutorial"/></a>  
-  
+<img style="margin-bottom:20px;" width="700" src="https://user-images.githubusercontent.com/38849685/207317959-eb2f5d4d-7bdc-4560-bfdb-5763236d9b9c.gif" alt="auto-fill-kotlin tutorial"/></a>
 
-<br/>
-  
+<br>  
+
 **⚙️ Configuration**   
 
 You can change configuration in Intellij Inspection Settings.  
