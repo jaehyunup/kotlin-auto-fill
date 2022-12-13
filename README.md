@@ -21,7 +21,7 @@ Installing right now if you kotlin users. ( maybe you will be enchanted 🧙🏽
 You can change configuration in Intellij Inspection Settings.  
 
 <a target="_blank" href="https://user-images.githubusercontent.com/38849685/207307931-a826bbed-39a9-4896-b703-d4297a3720c9.png">
- <img width="400" src="https://user-images.githubusercontent.com/38849685/207307931-a826bbed-39a9-4896-b703-d4297a3720c9.png" alt="auto-fill-kotlin tutorial">
+ <img width="500" src="https://user-images.githubusercontent.com/38849685/207307931-a826bbed-39a9-4896-b703-d4297a3720c9.png" alt="auto-fill-kotlin tutorial">
 </a>  
 
 <!-- Plugin description end -->
