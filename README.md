@@ -16,7 +16,7 @@ Installing right now if you kotlin users. ( maybe you will be enchanted 🧙🏽
 
 <br>  
 
-**⚙️ Configuration**   
+### ⚙️ Configuration   
 
 You can change configuration in Intellij Inspection Settings.  
 
