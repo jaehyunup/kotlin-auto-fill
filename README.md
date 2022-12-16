@@ -1,6 +1,6 @@
 # Kotlin Auto Fill
 ![version badge](https://img.shields.io/badge/version-1.0.0-informational)
-![IDE version](https://img.shields.io/badge/Support%20IDE%20Version%20on-2022.3-green)
+![IDE version](https://img.shields.io/badge/Support%20IDE%20Version%20since-2021.1-green)
 
 <!-- Plugin description start -->
 the most simple and powerful intellij plugin of parameter helper
@@ -36,3 +36,8 @@ You can change configuration in Intellij Inspection Settings.
   - updated only name arguments quickFix
   - refactor configuration variable structure
   - fix some bugs
+
+- 1.0.1
+  - now supported on intellij version since 2021.1 
+  - delete lambda function generator
+    - It was a feature that wasn't as helpful as I thought. Version compatibility of the APIs used in the proposed parameter name algorithm was not flexible. and another platform versions support was being delayed because of this feature.
