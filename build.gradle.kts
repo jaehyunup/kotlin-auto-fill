@@ -34,8 +34,9 @@ tasks {
     }
 
     patchPluginXml {
-        sinceBuild.set("223")
-//        pluginDescription.set(file("src/main/resources/META-INF/description.html").readText())
+        sinceBuild.set("211")
+        untilBuild.set("223.*")
+
         pluginDescription.set(
             projectDir.resolve("README.md").readText().lines().run {
                 val start = "<!-- Plugin description start -->"
@@ -60,6 +61,7 @@ tasks {
 
     buildSearchableOptions {
         enabled = false
+
     }
 
     signPlugin {
