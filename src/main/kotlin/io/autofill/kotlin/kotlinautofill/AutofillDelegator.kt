@@ -6,8 +6,6 @@ import org.jetbrains.kotlin.descriptors.ClassConstructorDescriptor
 import org.jetbrains.kotlin.descriptors.ClassKind
 import org.jetbrains.kotlin.descriptors.Modality
 import org.jetbrains.kotlin.descriptors.ValueParameterDescriptor
-import org.jetbrains.kotlin.idea.base.fe10.codeInsight.newDeclaration.Fe10KotlinNameSuggester
-import org.jetbrains.kotlin.idea.core.CollectingNameValidator
 import org.jetbrains.kotlin.idea.core.ShortenReferences
 import org.jetbrains.kotlin.idea.imports.importableFqName
 import org.jetbrains.kotlin.idea.intentions.callExpression
@@ -115,7 +113,7 @@ object AutofillDelegator {
             KotlinBuiltIns.isListOrNullableList(type) -> "listOf()"
             KotlinBuiltIns.isSetOrNullableSet(type) -> "setOf()"
             KotlinBuiltIns.isMapOrNullableMap(type) -> "mapOf()"
-            type.isFunctionType -> generateLambdaDefault(type)
+            type.isFunctionType -> "{ -> }"
             type.isMarkedNullable -> "null"
             else -> null
         }
@@ -135,7 +133,7 @@ object AutofillDelegator {
             KotlinBuiltIns.isListOrNullableList(type) -> "listOf()"
             KotlinBuiltIns.isSetOrNullableSet(type) -> "setOf()"
             KotlinBuiltIns.isMapOrNullableMap(type) -> "mapOf()"
-            type.isFunctionType -> generateLambdaDefault(type)
+            type.isFunctionType -> "{ -> }"
             type.isMarkedNullable -> "null"
             else -> null
         }
@@ -161,7 +159,7 @@ object AutofillDelegator {
         fun int(): String = intValueRange.random().toString()
         fun long(): String = "${longValueRange.random()}L"
         fun double(): String = decimalFormat.format(Random.nextDouble(0.00, 99.9999))
-        fun float(): String = "${floatFormat.format(Random.nextDouble())}"
+        fun float(): String = floatFormat.format(Random.nextDouble())
         fun stringOrUuid(name: String): String = if (UUID_PATTERN.matches(name)) {
             UUID.randomUUID().toString()
         } else {
@@ -183,24 +181,4 @@ object AutofillDelegator {
         }
 
     }
-
-
-    private fun generateLambdaDefault(ktType: KotlinType): String =
-        buildString {
-            append("{")
-            if (ktType.arguments.size > 2) {
-                val validator = CollectingNameValidator()
-                val lambdaParameters = ktType.arguments.dropLast(1).joinToString(postfix = "->") {
-                    val type = it.type
-                    val name = Fe10KotlinNameSuggester.suggestNamesByType(type, validator, "param")[0]
-                    validator.addName(name)
-                    val typeText =
-                        type.constructor.declarationDescriptor?.importableFqName?.asString() ?: type.toString()
-                    val nullable = if (type.isMarkedNullable) "?" else ""
-                    "$name: $typeText$nullable"
-                }
-                append(lambdaParameters)
-            }
-            append("}")
-        }
 }
