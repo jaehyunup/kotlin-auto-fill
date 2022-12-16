@@ -5,9 +5,8 @@ plugins {
     id("org.jetbrains.changelog") version "2.0.0"
     id("org.jetbrains.intellij") version "1.10.1"
 }
-
 group = "io.autofill.kotlin"
-version = "1.0.0"
+version = "1.0.1"
 
 repositories {
     mavenCentral()
