@@ -1,13 +1,15 @@
-package io.autofill.kotlin.kotlinautofill
+package io.autofill.kotlin.kotlinautofill.quickfixes
 
 import com.intellij.codeInspection.LocalQuickFix
 import com.intellij.codeInspection.ProblemDescriptor
 import com.intellij.openapi.project.Project
+import io.autofill.kotlin.kotlinautofill.core.AutofillDelegator
+import io.autofill.kotlin.kotlinautofill.thirdparty.getKtDescriptor
 import org.jetbrains.kotlin.psi.KtValueArgumentList
 
-class AddAllArgumentsNameQuickFix : LocalQuickFix {
+class RandomAutofillQuickFix: LocalQuickFix {
     companion object {
-        const val NAME = "Add missing named call arguments"
+        const val NAME = "Add parameters with Auto-Fill (Random value)"
     }
 
     override fun getName() = NAME
@@ -20,8 +22,8 @@ class AddAllArgumentsNameQuickFix : LocalQuickFix {
         AutofillDelegator.fillArguments(
             ktValueArgumentList = element,
             parameters = parameters,
-            enableDefaultArgument = false,
-            randomness = false
+            enableDefaultArgument = true,
+            randomness = true
         )
     }
 }

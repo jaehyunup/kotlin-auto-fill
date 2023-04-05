@@ -29,6 +29,6 @@
              groupName="Auto-Fill"
              enabledByDefault="true"
              level="INFORMATION"
-             implementationClass="io.autofill.kotlin.kotlinautofill.AutofillInspection"/>
+             implementationClass="io.autofill.kotlin.kotlinautofill.inspections.DefaultInspection"/>
     </extensions>
 </idea-plugin>

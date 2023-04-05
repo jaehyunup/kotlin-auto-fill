@@ -1,4 +1,4 @@
-package io.autofill.kotlin.kotlinautofill
+package io.autofill.kotlin.kotlinautofill.thirdparty
 
 import org.jetbrains.kotlin.descriptors.CallableDescriptor
 import org.jetbrains.kotlin.descriptors.ClassConstructorDescriptor

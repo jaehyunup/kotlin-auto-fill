@@ -6,7 +6,7 @@ plugins {
     id("org.jetbrains.intellij") version "1.10.1"
 }
 group = "io.autofill.kotlin"
-version = "1.0.1"
+version = "1.0.2"
 
 repositories {
     mavenCentral()
@@ -33,8 +33,8 @@ tasks {
     }
 
     patchPluginXml {
-        sinceBuild.set("211")
-        untilBuild.set("223.*")
+        sinceBuild.set("201")
+        untilBuild.set("231.*")
 
         pluginDescription.set(
             projectDir.resolve("README.md").readText().lines().run {
