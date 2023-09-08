@@ -1,15 +1,19 @@
 plugins {
     id("java")
-    id("org.jetbrains.kotlin.jvm") version "1.7.20"
+    id("org.jetbrains.kotlin.jvm") version "1.9.0"
     // Gradle Changelog Plugin
-    id("org.jetbrains.changelog") version "2.0.0"
-    id("org.jetbrains.intellij") version "1.10.1"
+    id("org.jetbrains.changelog") version "2.1.2"
+    id("org.jetbrains.intellij") version "1.15.0"
 }
 group = "io.autofill.kotlin"
 version = "1.0.2"
 
 repositories {
     mavenCentral()
+}
+
+kotlin {
+    jvmToolchain(17)
 }
 
 // Configure Gradle IntelliJ Plugin
@@ -34,7 +38,7 @@ tasks {
 
     patchPluginXml {
         sinceBuild.set("201")
-        untilBuild.set("231.*")
+        untilBuild.set("232.*")
 
         pluginDescription.set(
             projectDir.resolve("README.md").readText().lines().run {
