@@ -1,5 +1,5 @@
 # Kotlin Auto Fill
-![version badge](https://img.shields.io/badge/version-1.0.2-informational)
+![version badge](https://img.shields.io/badge/version-1.0.3-informational)
 
 <!-- Plugin description start -->
 the most simple and powerful intellij plugin of parameter helper
@@ -45,3 +45,6 @@ You can change configuration in Intellij Inspection Settings.
 - 1.0.2
   - support up to Intellij IDE version 231.*
   - Fixed a bug with boolean values being converted to strings when using "random generator"
+
+- 1.0.3
+  - support up to Intellij IDE version 232.*
