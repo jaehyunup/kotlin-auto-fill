@@ -48,3 +48,6 @@ You can change configuration in Intellij Inspection Settings.
 
 - 1.0.3
   - support up to Intellij IDE version 232.*
+
+- 1.0.4
+  - support up to Intellij IDE version 233.*
