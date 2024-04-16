@@ -1,5 +1,5 @@
 # Kotlin Auto Fill
-![version badge](https://img.shields.io/badge/version-1.0.3-informational)
+![version badge](https://img.shields.io/badge/version-1.0.5-informational)
 
 <!-- Plugin description start -->
 the most simple and powerful intellij plugin of parameter helper
@@ -51,3 +51,6 @@ You can change configuration in Intellij Inspection Settings.
 
 - 1.0.4
   - support up to Intellij IDE version 233.*
+
+- 1.0.5
+  - support up to Intellij IDE version 241.*
