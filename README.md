@@ -51,3 +51,6 @@ You can change configuration in Intellij Inspection Settings.
 
 - 1.0.4
   - support up to Intellij IDE version 233.*
+
+- 1.0.6
+  - support up to Intellij IDE version 242.*
