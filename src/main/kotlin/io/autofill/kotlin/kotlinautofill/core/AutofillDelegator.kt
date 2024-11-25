@@ -15,6 +15,7 @@ import org.jetbrains.kotlin.psi.KtPsiFactory
 import org.jetbrains.kotlin.psi.KtQualifiedExpression
 import org.jetbrains.kotlin.psi.KtValueArgument
 import org.jetbrains.kotlin.psi.KtValueArgumentList
+import org.jetbrains.kotlin.resolve.descriptorUtil.fqNameOrNull
 import org.jetbrains.kotlin.resolve.lazy.descriptors.LazyClassDescriptor
 import org.jetbrains.kotlin.types.KotlinType
 
@@ -73,7 +74,7 @@ object AutofillDelegator {
             if (descriptor?.kind == ClassKind.ENUM_CLASS || modality == Modality.ABSTRACT || modality == Modality.SEALED) {
                 return factory.createArgument(null, parameter.name)
             }
-            val fqName = descriptor?.importableFqName?.asString()
+            val fqName = descriptor?.fqNameOrNull()
             val valueParameters =
                 descriptor?.constructors?.firstOrNull { it is ClassConstructorDescriptor }?.valueParameters
 
