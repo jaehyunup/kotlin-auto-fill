@@ -6,7 +6,7 @@ plugins {
     id("org.jetbrains.intellij") version "1.10.1"
 }
 group = "io.autofill.kotlin"
-version = "1.0.7"
+version = "1.0.7-v2"
 
 
 repositories {
