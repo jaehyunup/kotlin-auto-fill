@@ -1,12 +1,8 @@
 package io.autofill.kotlin.kotlinautofill.core
 
-import org.jetbrains.kotlin.builtins.KotlinBuiltIns
-import org.jetbrains.kotlin.builtins.isFunctionType
-import org.jetbrains.kotlin.types.KotlinType
 import java.text.DecimalFormat
 import java.util.UUID
 import kotlin.random.Random
-
 
 object RandomValueGenerator {
     private val UUID_PATTERN = Regex("""^.*(uuid|Uuid|uUid|UUid|UUID).*""")
@@ -24,20 +20,30 @@ object RandomValueGenerator {
     }
 
     fun boolean(): String = Random.nextBoolean().toString()
+
     fun char(): String = charValuePool.random().toString()
+
     fun int(): String = intValueRange.random().toString()
+
     fun long(): String = "${longValueRange.random()}L"
+
     fun double(): String = decimalFormat.format(Random.nextDouble(0.00, 99.9999))
+
     fun float(): String = floatFormat.format(Random.nextDouble())
-    fun stringOrUuid(name: String): String = if (UUID_PATTERN.matches(name)) {
-        UUID.randomUUID().toString()
-    } else {
-        string().trim()
-    }
+
+    fun stringOrUuid(name: String): String =
+        if (UUID_PATTERN.matches(name)) {
+            UUID.randomUUID().toString()
+        } else {
+            string().trim()
+        }
 
     private fun string(): String = randomWordPool.random().trim()
 
-    private fun createDecimalFormatString(integerLength: Int, decimalLength: Int): String {
+    private fun createDecimalFormatString(
+        integerLength: Int,
+        decimalLength: Int,
+    ): String {
         var temp = ""
         for (i in 0 until integerLength) {
             temp += "#"
