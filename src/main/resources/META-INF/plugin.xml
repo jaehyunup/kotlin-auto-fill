@@ -32,4 +32,5 @@
              implementationClass="io.autofill.kotlin.kotlinautofill.inspection.K2Inspection"
         />
     </extensions>
+    <depends>org.jetbrains.kotlin</depends>
 </idea-plugin>
