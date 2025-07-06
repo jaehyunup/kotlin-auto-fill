@@ -1,64 +1,30 @@
 # Kotlin Auto Fill
-![version badge](https://img.shields.io/badge/version-1.0.7v2-informational)
+![version badge](https://img.shields.io/badge/version-2.0.0-informational)
 
 <!-- Plugin description start -->
-the most simple and powerful intellij plugin of parameter helper
+**Kotlin Auto Fill** is the ultimate IntelliJ plugin for Kotlin developers who are tired of manually writing long argument lists.
 
-Installing right now if you kotlin users.     
-maybe you will be enchanted 🧙🏽‍♂️  
-
-- only class constructor, functions arguments named
-- fill with **default values**
-- fill with **random values** 
+🚀 Instantly fill method parameters and constructor arguments  
+🎲 Smart generation for primitive types, strings, collections, and even class types  
+✨ Also supports generating and filling random values effortlessly  
+🧠 Context-aware suggestions tailored to parameter names and types  
+⚡ Boost your coding speed — no more tedious boilerplate  
 
 <a target="_blank" href=https://user-images.githubusercontent.com/38849685/207317959-eb2f5d4d-7bdc-4560-bfdb-5763236d9b9c.gif>
 <img style="margin-bottom:20px;" width="700" src="https://user-images.githubusercontent.com/38849685/207317959-eb2f5d4d-7bdc-4560-bfdb-5763236d9b9c.gif" alt="auto-fill-kotlin tutorial"/></a>
 
-<br>  
+<br>
+Perfect for testing, prototyping, or just getting things done faster.  
+Give it a try — you might get hooked. 🧙🏽‍♂️✨
+
+
 
 ### Configuration   
 
 You can change configuration in Intellij Inspection Settings.  
 
-<a target="_blank" href="https://user-images.githubusercontent.com/38849685/207307931-a826bbed-39a9-4896-b703-d4297a3720c9.png">
- <img width="500" src="https://user-images.githubusercontent.com/38849685/207307931-a826bbed-39a9-4896-b703-d4297a3720c9.png" alt="auto-fill-kotlin tutorial">
+<a target="_blank" href="https://github.com/user-attachments/assets/9c214f58-9d10-40fc-bb57-e7692b1320b8">
+ <img width="500" src="https://github.com/user-attachments/assets/9c214f58-9d10-40fc-bb57-e7692b1320b8" alt="auto-fill-kotlin configuration">
 </a>  
 
 <!-- Plugin description end -->
-
-## Change Log
-- 0.0.1-M1
-  - First deploy Kotlin Auto Fill with basic features
-  - support up to Intellij IDE version 2022.3
-
-- 1.0.0
-  - updated random value quickFix
-  - updated only name arguments quickFix
-  - refactor configuration variable structure
-  - fix some bugs
-
-- 1.0.1
-  - support since to Intellij IDE version 2021.1 
-  - delete lambda function generator
-    - It was a feature that wasn't as helpful as I thought. Version compatibility of the APIs used in the proposed parameter name algorithm was not flexible. and another platform versions support was being delayed because of this feature.
-
-- 1.0.2
-  - support up to Intellij IDE version 231.*
-  - Fixed a bug with boolean values being converted to strings when using "random generator"
-
-- 1.0.3
-  - support up to Intellij IDE version 232.*
-
-- 1.0.4
-  - support up to Intellij IDE version 233.*
-
-- 1.0.5
-  - support up to Intellij IDE version 241.*
-
-- 1.0.6 (2024.11.18)
-  - support up to Intellij IDE version 242.*
-
-- 1.0.7 (2024.11.25)
-  - support up to Intellij IDE version 243.*
-  - v2
-    - changed deprecated API

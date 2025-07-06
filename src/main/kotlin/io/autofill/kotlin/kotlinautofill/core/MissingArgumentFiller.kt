@@ -7,7 +7,6 @@ import org.jetbrains.kotlin.descriptors.ClassKind
 import org.jetbrains.kotlin.descriptors.Modality
 import org.jetbrains.kotlin.descriptors.ValueParameterDescriptor
 import org.jetbrains.kotlin.idea.core.ShortenReferences
-import org.jetbrains.kotlin.idea.imports.importableFqName
 import org.jetbrains.kotlin.idea.intentions.callExpression
 import org.jetbrains.kotlin.psi.KtCallExpression
 import org.jetbrains.kotlin.psi.KtLambdaExpression
@@ -19,18 +18,19 @@ import org.jetbrains.kotlin.resolve.descriptorUtil.fqNameOrNull
 import org.jetbrains.kotlin.resolve.lazy.descriptors.LazyClassDescriptor
 import org.jetbrains.kotlin.types.KotlinType
 
-object AutofillDelegator {
+object MissingArgumentFiller {
     fun fillArguments(
-        ktValueArgumentList: KtValueArgumentList,
-        parameters: List<ValueParameterDescriptor>,
+        ktValueArgumentListElement: KtValueArgumentList,
+        parameterDescriptors: List<ValueParameterDescriptor>,
         enableDefaultArgument: Boolean = true,
-        randomness: Boolean
+        randomness: Boolean,
+        onlyFillNames: Boolean = false,
     ) {
-        val arguments = ktValueArgumentList.arguments
+        val arguments = ktValueArgumentListElement.arguments
         val argumentNames = arguments.mapNotNull { it.getArgumentName()?.asName?.identifier }
-        val factory = KtPsiFactory(ktValueArgumentList)
+        val factory = KtPsiFactory(ktValueArgumentListElement)
 
-        parameters.forEachIndexed { index, parameter ->
+        parameterDescriptors.forEachIndexed { index, parameter ->
             // ignore when argument count over than parameters count
             // ignore already declared arguments
             if (arguments.size > index && !arguments[index].isNamed()) return@forEachIndexed
@@ -39,7 +39,9 @@ object AutofillDelegator {
             if (!enableDefaultArgument && parameter.declaresDefaultValue()) return@forEachIndexed
 
             val added =
-                ktValueArgumentList.addArgument(generateArgument(parameter, factory, enableDefaultArgument, randomness))
+                ktValueArgumentListElement.addArgument(
+                    generateArgument(parameter, factory, enableDefaultArgument, randomness, onlyFillNames),
+                )
 
             val argumentExpression = added.getArgumentExpression()
 
@@ -49,22 +51,23 @@ object AutofillDelegator {
         }
     }
 
-
     private fun generateArgument(
         parameter: ValueParameterDescriptor,
         factory: KtPsiFactory,
         enableDefaultArgument: Boolean,
-        randomMode: Boolean
+        randomMode: Boolean,
+        onlyFillNames: Boolean,
     ): KtValueArgument {
         val type = parameter.type
         if (!enableDefaultArgument) {
             return factory.createArgument(null, parameter.name)
         }
-        val injectionValue = if (randomMode) {
-            calculateRandomValue(type, parameter.name.toString())
-        } else {
-            calculateDefaultValue(type)
-        }
+        val injectionValue =
+            if (randomMode) {
+                calculateRandomValue(type, parameter.name.toString())
+            } else {
+                calculateDefaultValue(type)
+            }
 
         if (injectionValue != null) {
             return factory.createArgument(factory.createExpression(injectionValue), parameter.name)
@@ -78,26 +81,32 @@ object AutofillDelegator {
             val valueParameters =
                 descriptor?.constructors?.firstOrNull { it is ClassConstructorDescriptor }?.valueParameters
 
-            val argumentExpression = if (fqName != null && valueParameters != null) {
-                (factory.createExpression("$fqName()")).also {
-                    val callExpression = it as? KtCallExpression ?: (it as? KtQualifiedExpression)?.callExpression
-                    callExpression?.valueArgumentList?.let { argumentsList ->
-                        fillArguments(
-                            ktValueArgumentList = argumentsList,
-                            parameters = valueParameters,
-                            randomness = randomMode
-                        )
+            val argumentExpression =
+                if (fqName != null && valueParameters != null) {
+                    (factory.createExpression("$fqName()")).also {
+                        val callExpression = it as? KtCallExpression ?: (it as? KtQualifiedExpression)?.callExpression
+                        callExpression?.valueArgumentList?.let { argumentsList ->
+                            fillArguments(
+                                ktValueArgumentListElement = argumentsList,
+                                parameterDescriptors = valueParameters,
+                                randomness = randomMode,
+                                enableDefaultArgument = enableDefaultArgument,
+                                onlyFillNames = onlyFillNames,
+                            )
+                        }
                     }
+                } else {
+                    null
                 }
-            } else {
-                null
-            }
 
             return factory.createArgument(argumentExpression, parameter.name)
         }
     }
 
-    private fun calculateRandomValue(type: KotlinType, name: String): String? {
+    private fun calculateRandomValue(
+        type: KotlinType,
+        name: String,
+    ): String? {
         return when {
             KotlinBuiltIns.isString(type) -> "\"${RandomValueGenerator.stringOrUuid(name)}\""
             KotlinBuiltIns.isBoolean(type) -> RandomValueGenerator.boolean()
@@ -136,5 +145,4 @@ object AutofillDelegator {
             else -> null
         }
     }
-
 }

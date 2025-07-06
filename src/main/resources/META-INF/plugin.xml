@@ -24,11 +24,12 @@
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
         <localInspection language="kotlin"
-             displayName="Auto-fill inspection"
+             displayName="Auto-fill inspection (K2)"
              groupPath="Kotlin"
              groupName="Auto-Fill"
              enabledByDefault="true"
              level="INFORMATION"
-             implementationClass="io.autofill.kotlin.kotlinautofill.inspections.DefaultInspection"/>
+             implementationClass="io.autofill.kotlin.kotlinautofill.inspection.K2Inspection"
+        />
     </extensions>
 </idea-plugin>

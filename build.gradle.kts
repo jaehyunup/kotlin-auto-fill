@@ -1,13 +1,16 @@
+import org.jetbrains.changelog.Changelog.OutputType
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+
 plugins {
     id("java")
-    id("org.jetbrains.kotlin.jvm") version "1.7.20"
+    id("org.jetbrains.kotlin.jvm") version "1.9.24"
     // Gradle Changelog Plugin
-    id("org.jetbrains.changelog") version "2.0.0"
-    id("org.jetbrains.intellij") version "1.10.1"
+    id("org.jetbrains.changelog") version "2.2.0"
+    id("org.jetbrains.intellij") version "1.17.1"
+    id("org.jlleitschuh.gradle.ktlint") version "11.6.0"
 }
 group = "io.autofill.kotlin"
-version = "1.0.7-v2"
-
+version = "2.0.0"
 
 repositories {
     mavenCentral()
@@ -18,10 +21,35 @@ repositories {
 intellij {
     pluginName.set(getProperty("pluginName"))
     type.set(getProperty("platformType"))
-    version.set(getProperty("platformVersion"))
+    version.set("2024.1")
     plugins.set(getProperties("platformPlugins"))
 }
 
+changelog {
+    version.set(project.version.toString())
+    path.set(projectDir.resolve("CHANGELOG.md").path)
+}
+
+ktlint {
+    version.set("1.2.1")
+    android.set(false)
+    outputToConsole.set(true)
+    ignoreFailures.set(false)
+    reporters {
+        reporter(ReporterType.PLAIN)
+        reporter(ReporterType.CHECKSTYLE)
+    }
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
+}
+
+kotlin {
+    jvmToolchain(17)
+}
 
 tasks {
     // Set the JVM compatibility versions
@@ -34,8 +62,8 @@ tasks {
     }
 
     patchPluginXml {
-        sinceBuild.set("201")
-        untilBuild.set("243.*")
+        sinceBuild.set("241")
+        untilBuild.set("252.*")
 
         pluginDescription.set(
             projectDir.resolve("README.md").readText().lines().run {
@@ -52,16 +80,22 @@ tasks {
                         it,
                         org.intellij.markdown.parser.MarkdownParser(this).buildMarkdownTreeFromString(it),
                         this,
-                        false
+                        false,
                     ).generateHtml()
                 }
-            }
+            },
+        )
+
+        changeNotes.set(
+            changelog.run {
+                getOrNull(project.version.toString())?.let { changelog.renderItem(it, OutputType.MARKDOWN) }
+                    ?: changelog.renderItem(getLatest(), OutputType.MARKDOWN)
+            },
         )
     }
 
     buildSearchableOptions {
         enabled = false
-
     }
 
     signPlugin {
@@ -75,5 +109,8 @@ tasks {
     }
 }
 
-fun getProperty(name: String) = "${project.findProperty(name).toString()}"
+fun getProperty(name: String): String =
+    project.findProperty(name)?.toString()
+        ?: error("Property '$name' not found in gradle.properties")
+
 fun getProperties(name: String) = getProperty(name).split(",").map { it.trim() }
